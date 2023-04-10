@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import java.io.OutputStream
 
 object FileHelper {
@@ -45,5 +46,13 @@ object FileHelper {
         } finally {
             withContext(Dispatchers.IO) { fileOutputStream?.close() }
         }
+    }
+
+    fun readFromFile(context: Context, path: Uri): JSONArray {
+        val jsonSelectedFile = context.contentResolver.openInputStream(path);
+        val inputAsString = jsonSelectedFile?.bufferedReader().use { it?.readText() }
+        jsonSelectedFile?.close()
+
+        return JSONArray(inputAsString)
     }
 }

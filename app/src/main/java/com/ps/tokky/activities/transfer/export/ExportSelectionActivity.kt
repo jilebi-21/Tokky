@@ -13,7 +13,7 @@ import com.ps.tokky.R
 import com.ps.tokky.activities.BaseActivity
 import com.ps.tokky.activities.transfer.export.ExportActivity.Companion.INTENT_EXTRA_KEY_EXPORT_SELECTION
 import com.ps.tokky.databinding.ActivityExportSelectionBinding
-import com.ps.tokky.databinding.TransferListItemBinding
+import com.ps.tokky.databinding.TransferListExportItemBinding
 import com.ps.tokky.utils.DividerItemDecorator
 
 class ExportSelectionActivity : BaseActivity() {
@@ -53,7 +53,11 @@ class ExportSelectionActivity : BaseActivity() {
             R.id.menu_export_selection_done -> {
                 val checkedList = (binding.rv.adapter as ExportListAdapter).checkedListIds
                 if (checkedList.isEmpty()) {
-                    Toast.makeText(this, R.string.export_selection_no_item_selected, Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this,
+                        R.string.export_selection_no_item_selected,
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     return true
                 }
@@ -80,7 +84,7 @@ class ExportSelectionActivity : BaseActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val binding = TransferListItemBinding.inflate(layoutInflater, parent, false)
+            val binding = TransferListExportItemBinding.inflate(layoutInflater, parent, false)
             return ViewHolder(binding)
         }
 
@@ -103,7 +107,8 @@ class ExportSelectionActivity : BaseActivity() {
 
         override fun getItemCount() = list.size
 
-        inner class ViewHolder(val binding: TransferListItemBinding) : RecyclerView.ViewHolder(binding.root)
+        inner class ViewHolder(val binding: TransferListExportItemBinding) :
+            RecyclerView.ViewHolder(binding.root)
     }
 
     companion object {

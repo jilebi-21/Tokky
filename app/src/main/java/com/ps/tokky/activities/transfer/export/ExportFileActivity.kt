@@ -15,7 +15,7 @@ import com.ps.tokky.activities.transfer.export.ExportActivity.Companion.RESULT_C
 import com.ps.tokky.databinding.ActivityExportFileBinding
 import com.ps.tokky.models.TokenEntry
 import com.ps.tokky.utils.Constants.EXPORT_FILE_NAME
-import com.ps.tokky.utils.Constants.MIME_TYPE
+import com.ps.tokky.utils.Constants.FILE_MIME_TYPE
 import com.ps.tokky.utils.FileHelper
 import org.json.JSONArray
 
@@ -95,7 +95,7 @@ class ExportFileActivity : BaseActivity() {
     private fun launchDirectoryPicker(fileName: String) {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = MIME_TYPE
+            type = FILE_MIME_TYPE
             putExtra(Intent.EXTRA_TITLE, fileName)
         }
         launcher.launch(intent)

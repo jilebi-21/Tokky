@@ -58,7 +58,10 @@
             android:name=".activities.transfer.export.ExportActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.transfer.ImportActivity"
+            android:name=".activities.transfer.imports.ImportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.transfer.imports.ImportFailedActivity"
             android:exported="false" />
     </application>
 

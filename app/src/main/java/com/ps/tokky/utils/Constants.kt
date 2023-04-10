@@ -24,5 +24,5 @@ object Constants {
             return EXPORT_FILE_NAME_PREFIX + formatted
         }
 
-    const val MIME_TYPE = "application/json"
+    const val FILE_MIME_TYPE = "application/json"
 }

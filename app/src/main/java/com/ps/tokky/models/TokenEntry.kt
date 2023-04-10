@@ -68,6 +68,8 @@ class TokenEntry {
         this.hash = json.getString(KEY_HASH)
     }
 
+    constructor(json: JSONObject) : this(UUID.randomUUID().toString(), json)
+
     constructor(uri: URI) {
         if (!Utils.isValidTOTPAuthURL(uri.toString())) {
             throw BadlyFormedURLException("Invalid URL format")
@@ -84,7 +86,8 @@ class TokenEntry {
         this.issuer = params["issuer"] ?: ""
         this.label = uri.path.substring(1)
 
-        val secret = params["secret"]?.cleanSecretKey() ?: throw IllegalArgumentException("Missing secret parameter")
+        val secret = params["secret"]?.cleanSecretKey()
+            ?: throw IllegalArgumentException("Missing secret parameter")
         if (secret.isValidSecretKey()) {
             this.secretKey = Base32().decode(secret.cleanSecretKey())
         } else throw InvalidSecretKeyException("Invalid secret key")
@@ -145,18 +148,11 @@ class TokenEntry {
         }
     }
 
-    fun toQRData(): String {
-        JSONObject().apply {
-            put(KEY_ISSUER, issuer) //String
-            put(KEY_LABEL, label) //String
-            put(KEY_SECRET_KEY, secretKeyEncoded) //String
-            put(KEY_PERIOD, period) //Int
-            put(KEY_OTP_LENGTH, otpLength) //Int
-            put(KEY_ALGORITHM, algorithm) //String
-            put(KEY_HASH, hash)
+    val name: String
+        get() {
+            if (label.isEmpty()) return issuer
+            return "$issuer ($label)"
         }
-        return "$issuer"
-    }
 
     companion object {
         const val TAG = "TokenEntry"
