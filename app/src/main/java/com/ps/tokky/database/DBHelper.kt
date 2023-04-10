@@ -96,6 +96,10 @@ class DBHelper private constructor(
         return TokenEntry(id, jsonObj)
     }
 
+    fun getEntriesWithIDs(list: List<String?>): List<TokenEntry?> {
+        return list.map { allEntries.find { it1 -> it == it1.id } }
+    }
+
     companion object {
         private const val TAG = "DBHelper"
 

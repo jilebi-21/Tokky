@@ -68,6 +68,8 @@ class TokenEntry {
         this.hash = json.getString(KEY_HASH)
     }
 
+    constructor(json: JSONObject) : this(UUID.randomUUID().toString(), json)
+
     constructor(data: String?) {
         if (data == null)
             throw EmptyURLContentException("URL data is null")
@@ -89,7 +91,8 @@ class TokenEntry {
         this.issuer = params?.get("issuer") ?: ""
         this.label = uri.path?.substring(1) ?: ""
 
-        val secret = params?.get("secret")?.cleanSecretKey() ?: throw IllegalArgumentException("Missing secret parameter")
+        val secret = params?.get("secret")?.cleanSecretKey()
+            ?: throw IllegalArgumentException("Missing secret parameter")
         if (secret.isValidSecretKey()) {
             this.secretKey = Base32().decode(secret.cleanSecretKey())
         } else throw InvalidSecretKeyException("Invalid secret key")
@@ -149,6 +152,12 @@ class TokenEntry {
             put(KEY_HASH, hash)
         }
     }
+
+    val name: String
+        get() {
+            if (label.isEmpty()) return issuer
+            return "$issuer ($label)"
+        }
 
     companion object {
         const val TAG = "TokenEntry"
